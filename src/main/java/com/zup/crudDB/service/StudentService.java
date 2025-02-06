@@ -41,9 +41,14 @@ public class StudentService {
         if (Objects.nonNull(studentRequest.getAge())) {
             student.setAge(studentRequest.getAge());
         }
-
         Student updatedStudent = studentRepository.save(student);
 
         return new StudentResponse(updatedStudent.getId(), updatedStudent.getName(), updatedStudent.getAge());
+    }
+
+    public void delete(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+        studentRepository.delete(student);
     }
 }
